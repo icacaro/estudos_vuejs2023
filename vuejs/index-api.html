@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="puxarPokemon">puxar pokemons</button>
+
+        <ul>
+            <li v-for="(pokemon, index) in pokemons.results" :key="index">
+              {{ pokemon.name }}
+            </li>
+        </ul>
+
+    </div>
+
+<script>
+   const vm = new Vue ({
+    el: "#app",
+    data: {
+        pokemons: {},
+        limit: 150
+
+    },
+    methods: {
+        puxarPokemon(){
+            fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${this.limit}`)
+            .then(response => response.json())
+            .then(json => {
+                this.pokemons = json;
+            })
+        }
+    },
+   })
+</script>
+
+
+</body>
+</html>
